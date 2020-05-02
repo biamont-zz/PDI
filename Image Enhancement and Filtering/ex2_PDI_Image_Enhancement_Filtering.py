@@ -103,26 +103,7 @@ def convolution_point(f, kernel, x, y):
     
     return If
     
-    
-#MAIN
-
-#read image
-filename = str(input()).rstrip()
-input_img = imageio.imread(filename)
-
-method = int(input()) #select method
-save = int(input()) #1(save final_img) 0(dont save)
-
-img = np.array(input_img)
-img = img.astype(np.int32) #casting para realizar as funcoes
-
-#creates matrix for final image
-t1, t2 = img.shape
-final_img = np.zeros((t1,t2), dtype=np.float)
-
-
-#BILATERAL FILTER
-if method == 1:
+def bilateral_filter(img, final_img):
     n = int(input())
     gs = float(input())
     gr = float(input())
@@ -141,9 +122,10 @@ if method == 1:
     for i in range(som, t1+som):
         for j in range(som, t2+som):
             final_img[i-som][j-som] = convolution__bilateral_f(pad_img, ws, i, j, center, center)
+            
+    return final_img
 
-#UNSHARP MASK USING LAPLACIAN FILTER
-if method == 2:
+def unsharp_mask(img, final_img):
     c = float(input())
     k = int(input())
     
@@ -189,10 +171,10 @@ if method == 2:
     for i in range(t1):
         for j in range(t2):
             final_img[i,j] = ((final_img[i,j]-min_f_i)*255)/(max_f_i)
-
-#ViIGANETTE FILTER
             
-if method == 3:
+    return final_img
+
+def viganette_filter(img, final_img):
     
     delta_r = float(input())  
     delta_c = float(input())
@@ -226,7 +208,40 @@ if method == 3:
     for i in range(t1):
         for j in range(t2):
             final_img[i,j] = ((final_img[i,j]-min_f_i)*255)/(max_f_i)
-      
+            
+    return final_img    
+    
+#MAIN
+
+#read image
+filename = str(input()).rstrip()
+input_img = imageio.imread(filename)
+
+method = int(input()) #select method
+save = int(input()) #1(save final_img) 0(dont save)
+
+img = np.array(input_img)
+img = img.astype(np.int32) #casting para realizar as funcoes
+
+#creates matrix for final image
+t1, t2 = img.shape
+final_img = np.zeros((t1,t2), dtype=np.float)
+
+
+#BILATERAL FILTER
+if method == 1:
+    final_img = bilateral_filter(img, final_img)
+
+#UNSHARP MASK USING LAPLACIAN FILTER
+if method == 2:
+    final_img = unsharp_mask(img, final_img)
+
+#VIGANETTE FILTER
+            
+if method == 3:
+    final_img = viganette_filter(img, final_img)
+    
+
 #COMPARING IMG AND IMG_FINAL
 total = 0.0
 
