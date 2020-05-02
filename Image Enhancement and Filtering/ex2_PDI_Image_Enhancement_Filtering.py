@@ -58,7 +58,7 @@ def rangeGaussian(gr, x):
 
     return final
 
-def convolution__bilateral_f(f, ws, x, y, cr, cc):
+def convolution__bilateral_f(f, ws, gr, x, y, cr, cc):
     n, m = ws.shape #dimensions of w
     a = int((n-1)/2)
     b = int((m-1)/2)
@@ -121,7 +121,7 @@ def bilateral_filter(img, final_img):
     #appling filter by convolution with ws and gr
     for i in range(som, t1+som):
         for j in range(som, t2+som):
-            final_img[i-som][j-som] = convolution__bilateral_f(pad_img, ws, i, j, center, center)
+            final_img[i-som][j-som] = convolution__bilateral_f(pad_img, ws, gr, i, j, center, center)
             
     return final_img
 
