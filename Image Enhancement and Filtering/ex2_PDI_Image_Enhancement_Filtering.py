@@ -161,7 +161,8 @@ def unsharp_mask(img, final_img):
    
     for i in range(t1):
         for j in range(t2):
-            final_img[i,j] = ((final_img[i,j]-min_f_i)*255)/(max_f_i)
+            final_img[i,j] = ((final_img[i,j]-min_f_i)*255)/(max_f_i - min_f_i)
+            
             final_img[i,j] = (final_img[i,j]*c) + img[i,j]
 
     #scaling again
@@ -170,7 +171,7 @@ def unsharp_mask(img, final_img):
 	
     for i in range(t1):
         for j in range(t2):
-            final_img[i,j] = ((final_img[i,j]-min_f_i)*255)/(max_f_i)
+            final_img[i,j] = ((final_img[i,j]-min_f_i)*255)/(max_f_i - min_f_i)
             
     return final_img
 
@@ -207,7 +208,7 @@ def viganette_filter(img, final_img):
 	
     for i in range(t1):
         for j in range(t2):
-            final_img[i,j] = ((final_img[i,j]-min_f_i)*255)/(max_f_i)
+            final_img[i,j] = ((final_img[i,j]-min_f_i)*255)/(max_f_i - min_f_i)
             
     return final_img    
     
