@@ -18,15 +18,12 @@ def DFT2D(f):
     F = np.zeros(f.shape, dtype=np.complex64)
     n,m = f.shape
     
-    x = np.arange(n)
-    y = np.arange(m)
+    x = np.arange(n).reshape(n,1)
+    y = np.arange(m).reshape(1, m)
     
     for u in np.arange(n):
         for v in np.arange(m):
-            
-            for x in np.arange(n):
-                for y in np.arange(m):
-                    F[u,v] += f[x,y]*np.exp((-1j*2*np.pi)*(((u*x/n)+((v*y)/m))))
+           F[u,v] = np.sum(f[x,y]*np.exp((-1j*2*np.pi)*(((u*x/n)+((v*y)/m)))))
     
     return F/np.sqrt(n*m)
 
@@ -35,15 +32,13 @@ def INV_DFT2D(f):
     F = np.zeros(f.shape, dtype=np.complex64)
     n,m = f.shape
     
-    x = np.arange(n)
-    y = np.arange(m)
+    x = np.arange(n).reshape(n,1)
+    y = np.arange(m).reshape(1, m)
     
     for u in np.arange(n):
         for v in np.arange(m):
             
-            for x in np.arange(n):
-                for y in np.arange(m):
-                    F[u,v] += f[x,y]*np.exp((1j*2*np.pi)*(((u*x/n)+((v*y)/m))))
+            F[u,v] = np.sum(f[x,y]*np.exp((1j*2*np.pi)*(((u*x/n)+((v*y)/m)))))
     
     return F/np.sqrt(m*n)
 
@@ -93,16 +88,18 @@ for i in range(n):
             cnt += 1
 
 fourier_img = INV_DFT2D(fourier_img)
-fourier_img = fourier_img.astype(np.float32)
 
 #imageio.imwrite('output_img.png', fourier_img.astype(np.uint8))
-            
-print("Threshold=" , round(p2*T, 4))
-print("Filtered Coefficients", cnt)
-print("Original Mean=" , round(np.mean(img), 2))
-print("New Mean=", round(np.mean(fourier_img), 2))
+
+  
+print("Threshold=%.4f" % (p2*T))
+print("Filtered Coefficients=%d" % (cnt))
+print("Original Mean=%.2f" % (np.mean(img)))
+print("New Mean=%.2f" % (np.mean(fourier_img)))
+
+
 
 end = time.time()
 elapsed = end - start
     
-print("Running time: "+ str(elapsed) + "sec")
+#print("Running time: "+ str(elapsed) + "sec")
