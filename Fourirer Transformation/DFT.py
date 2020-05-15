@@ -1,13 +1,16 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu May 14 18:04:03 2020
 
-@author: Fuso
-"""
-
-# -*- coding: utf-8 -*-
 """
 Created on Thu May 14 17:37:47 2020
+
+Beatriz Campos de Almeida de Castro Monteiro
+NUSP: 9778619
+Bacharel em Ciência da Computação - ICMC, USP São Carlos
+SCC0251/5830— Prof. Moacir Ponti
+2020.01
+
+Short Assignment 1: Filtering in Fourier Domain
+
+github link: https://github.com/biamont/PDI/tree/master/Fourirer%20Transformation
 
 @author: Fuso
 """
@@ -87,7 +90,7 @@ for i in range(n):
             fourier_img[i][j] = 0
             cnt += 1
 
-fourier_img = INV_DFT2D(fourier_img)
+fourier_img = abs(INV_DFT2D(fourier_img))
 
 #imageio.imwrite('output_img.png', fourier_img.astype(np.uint8))
 
@@ -97,8 +100,6 @@ print("Threshold=%.4f" % (p2*T))
 print("Filtered Coefficients=%d" % (cnt))
 print("Original Mean=%.2f" % (np.mean(img)))
 print("New Mean=%.2f" % (np.mean(fourier_img)))
-
-
 
 end = time.time()
 elapsed = end - start
