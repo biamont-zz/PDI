@@ -12,7 +12,7 @@ Created on Thu May 14 17:37:47 2020
 @author: Fuso
 """
 import numpy as np
-import imageio, time
+import imageio, time, warnings
 
 def DFT2D(f):
     F = np.zeros(f.shape, dtype=np.complex64)
@@ -91,7 +91,8 @@ fourier_img = INV_DFT2D(fourier_img)
 
 #imageio.imwrite('output_img.png', fourier_img.astype(np.uint8))
 
-  
+warnings.filterwarnings("ignore")
+         
 print("Threshold=%.4f" % (p2*T))
 print("Filtered Coefficients=%d" % (cnt))
 print("Original Mean=%.2f" % (np.mean(img)))
